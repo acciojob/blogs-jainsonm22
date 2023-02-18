@@ -11,44 +11,35 @@ import java.util.List;
 @Table (name="blog")
 public class Blog{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int blogId;
-    
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    private int id;
     private String title;
     private String content;
 
     @CreationTimestamp
     private Date pubDate;
 
-
-    //A user can have multiple block so the mapping will be 1:m
+    //Mapping
     @ManyToOne
     @JoinColumn
-    User user;
-
-    //for one blog multiple images
+    private User user;
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
-     private List<Image> imageList;
+    @JoinColumn
+    private List<Image> imageList;
 
     public Blog() {
+
     }
 
-    public Blog(String title, String content, User user) {
+    public Blog(User user, String title, String content) {
         this.title = title;
         this.content = content;
         this.user = user;
     }
 
-    public Blog(int blogId, String title, String content, Date pubDate) {
-        this.blogId = blogId;
-        this.title = title;
-        this.content = content;
-        this.pubDate = pubDate;
-    }
-
-    public Blog(int blogId, String title, String content, Date pubDate, User user, List<Image> imageList) {
-        this.blogId = blogId;
+    public Blog(int id, String title, String content, Date pubDate, User user, List<Image> imageList) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.pubDate = pubDate;
@@ -56,12 +47,12 @@ public class Blog{
         this.imageList = imageList;
     }
 
-    public int getBlogId() {
-        return blogId;
+    public int getId() {
+        return id;
     }
 
-    public void setBlogId(int blogId) {
-        this.blogId = blogId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
